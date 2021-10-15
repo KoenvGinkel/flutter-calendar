@@ -9,7 +9,7 @@ class PartyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // body: Center(child: Text(item.name)),
-        );
+      body: Center(child: Text(item.name)),
+    );
   }
 }

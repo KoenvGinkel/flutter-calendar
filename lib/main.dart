@@ -63,10 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[for (var item in events) PartyItem(item: item)],
-        ),
+        child: ListView.builder(
+          itemCount: events.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(events[index].name),
+            );
+          },
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showDialog,
