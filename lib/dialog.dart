@@ -15,7 +15,7 @@ class DialogData {
 class CustomDialog extends StatelessWidget {
   String name = "";
   String description = "";
-  String date = "";
+  String date = DateTime.now().toString();
   DialogCallBack dialogCallBack;
 
   CustomDialog({Key? key, required this.dialogCallBack}) : super(key: key);

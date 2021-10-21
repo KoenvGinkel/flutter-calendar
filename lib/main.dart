@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:calendar/dialog.dart';
 import 'package:calendar/partyitem.dart';
 import 'package:flutter/material.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,6 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       events = temp;
     });
+
+    DateTime startDate = DateTime.parse(data.date);
+    DateTime endDate = startDate.add(const Duration(hours: 3));
+
+    // save event to calendar
+    Event event = Event(
+        title: data.name,
+        description: data.description,
+        startDate: startDate,
+        endDate: endDate);
+    // Add2Calendar.addEvent2Cal(event);
   }
 
   @override
@@ -62,15 +77,21 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: events.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(events[index].name),
-            );
-          },
-        )
+      body: ListView.builder(
+        itemCount: events.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(events[index].name),
+            subtitle: Text(events[index].date),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PartyItem(item: events[index])),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showDialog,
