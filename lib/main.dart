@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         description: data.description,
         startDate: startDate,
         endDate: endDate);
-    // Add2Calendar.addEvent2Cal(event);
+    Add2Calendar.addEvent2Cal(event);
   }
 
   @override
