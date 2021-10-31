@@ -5,6 +5,7 @@ import 'package:calendar/partyitem.dart';
 import 'package:flutter/material.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,11 +36,18 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+/// Main home screen and start page of the app.
 class _MyHomePageState extends State<MyHomePage> {
   List<DialogData> events = [];
   String name = '';
   String description = '';
   String date = DateTime.now().toString();
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   Future<String?> _showDialog() {
     return showDialog<String>(
@@ -50,10 +58,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void addEvent(DialogData data) {
+  void loadData() async {
+    final shared = await SharedPreferences.getInstance();
+    var data = shared.getString("parties");
+    if (data != null) {
+      setState(() {
+        events = jsonDecode(data);
+      });
+    }
+  }
+
+  void addEvent(DialogData data) async {
     // copy the events list.
     List<DialogData> temp = events;
     temp.add(data);
+
+    // //Save the data persisitance
+    final shared = await SharedPreferences.getInstance();
+    shared.setString("parties", jsonEncode(temp));
+
 
     setState(() {
       events = temp;
@@ -72,7 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext 
+  context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -87,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => PartyItem(item: events[index])),
+                    builder: (context) => PartyList(data: events[index])),
               );
             },
           );

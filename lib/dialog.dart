@@ -1,5 +1,8 @@
+import 'package:calendar/contactpicker.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+
+import 'contactdata.dart';
 
 typedef DialogCallBack = void Function(DialogData data);
 
@@ -7,9 +10,10 @@ class DialogData {
   String name;
   String description;
   String date;
+  List<ContactData> contacts;
 
   DialogData(
-      {required this.date, required this.description, required this.name});
+      {required this.date, required this.description, required this.name, required this.contacts});
 }
 
 class CustomDialog extends StatelessWidget {
@@ -73,7 +77,7 @@ class CustomDialog extends StatelessWidget {
           ),
           onPressed: () => {
             dialogCallBack(
-              DialogData(date: date, description: description, name: name),
+              DialogData(date: date, description: description, name: name, contacts: []),
             ),
             Navigator.pop(context)
           },

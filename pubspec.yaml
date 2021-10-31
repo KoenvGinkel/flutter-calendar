@@ -38,6 +38,10 @@ dependencies:
   add_2_calendar: ^2.1.2
   shared_preferences: ^2.0.8
   path_provider: ^2.0.5
+  contacts_service: ^0.6.3
+  permission_handler: ^8.2.5
+  mailto: ^2.0.0
+  url_launcher: ^6.0.12
 
 dev_dependencies:
   flutter_test:
