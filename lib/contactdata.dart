@@ -14,4 +14,19 @@ class ContactData {
     required this.phone,
     required this.use
   });
+
+   ContactData fromJson(Map<String, dynamic> json) => ContactData(
+      Name: json["Name"],
+      Id: json["Id"],
+      email: json["email"],
+      phone: json["phone"],
+      use: json["use"]);
+
+  Map<String, dynamic> toJson() => {
+        "Name": Name,
+        "Id": Id,
+        "email": email,
+        "phone": phone,
+        "selected": use,
+      };
 }

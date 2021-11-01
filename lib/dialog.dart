@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:calendar/contactpicker.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,23 @@ class DialogData {
   List<ContactData> contacts;
 
   DialogData(
-      {required this.date, required this.description, required this.name, required this.contacts});
+      {required this.date,
+      required this.description,
+      required this.name,
+      required this.contacts});
+
+  DialogData fromJson(Map<String, dynamic> json) => DialogData(
+      name: json["name"],
+      description: json["description"],
+      date: json["date"],
+      contacts: jsonDecode(json["contacts"]));
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "description": description,
+        "date": date,
+        "contacts": jsonEncode(contacts),
+      };
 }
 
 class CustomDialog extends StatelessWidget {
@@ -77,7 +95,11 @@ class CustomDialog extends StatelessWidget {
           ),
           onPressed: () => {
             dialogCallBack(
-              DialogData(date: date, description: description, name: name, contacts: []),
+              DialogData(
+                  date: date,
+                  description: description,
+                  name: name,
+                  contacts: []),
             ),
             Navigator.pop(context)
           },
